@@ -7,14 +7,11 @@
     <script>
       AFRAME.registerComponent('school-playground', {
         init: function () {
-          // Solution for Handling Events.
+          // Solution for Modifying Entities.
           var sceneEl = document.querySelector('a-scene'); 
-          var boxEl = sceneEl.querySelector('a-box')
-          
-          boxEl.addEventListener('foo', function () {
-            boxEl.setAttribute('color', 'blue');  
-          });
-          boxEl.emit('foo');
+          sceneEl.querySelector('a-box').setAttribute('rotation', {x: 0, y: 0, z: 0});
+          sceneEl.querySelector('a-cylinder').setAttribute('geometry', 'height', 0.5);
+          sceneEl.querySelector('a-sphere').setAttribute('material', {metalness: 1});
         }
       });
     </script>

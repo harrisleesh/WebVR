@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Welcome to Glitch!</title>
+    <meta name="description" content="A cool thing made with Glitch">
+    <meta charset="utf-8">
+        <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+        <script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
+
+  </head>
+  <body>
+    <script>
+      AFRAME.registerComponent('hello', {
+        schema:{
+          on:{type: 'string'},
+          target: {type: 'selector'},
+          src: {type: 'string'},
+          dur: {type: 'number', default: 300}
+        },
+        init: function () {
+          var data = this.data;
+          var el = this.el;
+          el.addEventListener(data.on, function(){
+            
+            data.target.setAttribute('material', 'src', data.src);
+          })
+        }
+      });
+    </script>
+    <a-scene>
+      <a-assets>
+        <img id="sky1" src="https://cdn.glitch.com/cf9715c5-5128-4cb1-ba5c-951c20bb1e66%2Fsky.jpg?1500413151163"/>
+        <img id="sky2" src="https://cdn.glitch.com/cf9715c5-5128-4cb1-ba5c-951c20bb1e66%2Fsky1.jpg?1500422204788"/>
+         
+      </a-assets>
+      <a-sphere id="sphere" hello="on: click; target: #sky; src: #sky2" material="color:yellow" position="-1 1 -5" radius="0.5"></a-sphere>
+      <a-sphere id="sphere2" hello="on: click; target: #sky; src: #sky1" material="color:yellow" position="1 1 -5" radius="0.5"></a-sphere>
+      <a-sky id="sky" src="#sky1"></a-sky>
+      <a-entity camera look-controls mouse-cursor>
+        <a-entity cursor="fuse: true; fuseTimeout: 500"
+                position="0 0 -1"
+                geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+                material="color: black; shader: flat">
+        </a-entity>
+      </a-entity>
+    </a-scene>
+  </body>
+</html>

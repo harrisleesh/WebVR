@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+    <script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <a-assets>
+        
+        <img id="sky1" src="https://cdn.glitch.com/1f42b28c-2e82-407d-a6f1-27790b21eb18%2Fsky.jpg?1499988577079"/>
+        <img id="sky2" src="https://cdn.glitch.com/1f42b28c-2e82-407d-a6f1-27790b21eb18%2Fsky1.jpg?1500420512590"/>
+         <a-entity class="link"
+            geometry="primitive: sphere; radius:2; color:yellow"
+            position="0 1 -5"
+            
+            set-image="on: click; target: #sky; src: ${src}"
+            ></a-entity>
+      </a-assets>
+      <!-- Image links. -->
+      <a-entity id="links" layout="type: line; margin: 1.5" position="0 -1 -3">
+        <a-entity template="src: #link" data-src="#cubes" data-thumb="#cubes-thumb"></a-entity>
+        <a-entity template="src: #link" data-src="#city" data-thumb="#city-thumb"></a-entity>
+      </a-entity>
+      <a-sky id = "sky" src="https://cdn.glitch.com/1f42b28c-2e82-407d-a6f1-27790b21eb18%2Fsky.jpg?1499988577079"></a-sky>
+      <!-- Target -->
+
+      <!-- Camera + Cursor -->
+      <a-entity camera look-controls mouse-cursor>
+        <a-entity cursor="fuse: true; fuseTimeout: 500"
+                position="0 0 -1"
+                geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+                material="color: black; shader: flat">
+        </a-entity>
+      </a-entity>
+      <script>
+        var targetEl = document.querySelector('#target');
+          console.log(targetEl);
+          targetEl.addEventListener('click', function() {
+            alert("hello world")
+          });
+      </script>
+    </a-scene>
+    
+  </body>
+</html>

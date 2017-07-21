@@ -1,3 +1,24 @@
+var sphereEl=null;
+var nel = null;
+AFRAME.registerComponent('getid',{
+  schema:{
+    default : true
+  },
+
+  init: function(){
+    var el = this.el;
+    el.addEventListener('mousedown',function(){
+      sphereEl=el;
+      console.log(el);
+      nel=el;
+    })
+    el.addEventListener('click',function(){
+        nel=null;
+
+    })
+  }
+});
+
 AFRAME.registerComponent('draggable-component', {
     schema: {
         default: true
@@ -6,11 +27,15 @@ AFRAME.registerComponent('draggable-component', {
         var el = this.el;
         var property = this;
         var sceneEl = document.querySelector('a-scene');
+        var cameraEl = document.querySelector('a-camera');
+
+        sphereEl = document.querySelector('#hotspot');
+
+        var sphereObj = sphereEl.object3D;
         var mouseDownFlag = false;
-        var mousePosition = null;
-        var offsetX = null;
-        var offsetY = null;
-        var currentRotation = null;
+        var mouse = { x: 0, y: 0 };
+        var cameraObj = this.el.getObject3D('camera');
+        var dist = sphereObj.position.distanceTo(cameraObj.position);
 
         el.addEventListener('mousedown', function() {
             mouseDownFlag = true;
@@ -18,31 +43,28 @@ AFRAME.registerComponent('draggable-component', {
 
         sceneEl.addEventListener('mouseup', function() {
             mouseDownFlag = false;
-            mousePosition = null;
-            offsetX = null;
-            offsetY = null;
-            currentRotation = null;
         });
 
         sceneEl.addEventListener('mousemove', function(mouseData) {
             if (property.data) {
                 if (mouseDownFlag) {
-                    if (mousePosition) {
-                        offsetY = mouseData.clientY - mousePosition.clientY;
-                        offsetX = mouseData.clientX - mousePosition.clientX;
-                        currentRotation = el.getAttribute('rotation');
-                        el.setAttribute('rotation', {
-                            x: currentRotation.x - offsetY / 4.6,
-                            y: currentRotation.y - offsetX / 4.6,
-                            z: currentRotation.z
-                        });
-                    }
-                    mousePosition = mouseData;
+                  sphereEl=nel;
+                  if(nel!=null){
+                    sphereObj = sphereEl.object3D;
+                    let rc = new THREE.Raycaster();
+                    mouse.x = (mouseData.clientX / window.innerWidth) * 2 - 1;
+                    mouse.y = -(mouseData.clientY / window.innerHeight) * 2 + 1;
+                    rc.setFromCamera(mouse, cameraObj);
+                    let point = rc.ray.at(dist);
+                    sphereEl.setAttribute('position', point);
+                    console.log(point);
+                  }
                 }
             }
         });
+
     },
     update: function() {
-        
+
     }
 });

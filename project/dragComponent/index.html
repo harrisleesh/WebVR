@@ -38,7 +38,21 @@
     posit.y = Math.sqrt(65)*Math.sin(rota.x* (Math.PI/180))+1.6;
     posit.z = -1*Math.sqrt(65)*Math.cos(rota.x* (Math.PI/180))*Math.cos(rota.y* (Math.PI/180));
     console.log(posit);
-    document.querySelector('#hotspot').setAttribute('position', posit);
+    var sceneEl = document.querySelector('a-scene');
+    var sphereEl = document.createElement('a-sphere');
+    var animaEl = document.createElement('a-animation');
+    animaEl.setAttribute('attribute', 'scale');
+    animaEl.setAttribute('from','.3 .3 .3');
+    animaEl.setAttribute('to','.5 .5 .5');
+    animaEl.setAttribute('repeat','indefinite');
+    animaEl.setAttribute('dur','1000');
+    sphereEl.appendChild(animaEl);
+    sphereEl.setAttribute('position', posit);
+    sphereEl.setAttribute('color', 'white');
+    sphereEl.setAttribute('scale', '.5 .5 .5');
+    sphereEl.setAttribute('opacity', '0.8');
+    sphereEl.setAttribute('getid','');
+    sceneEl.appendChild(sphereEl);
     ">
 </body>
 

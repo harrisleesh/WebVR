@@ -9,12 +9,13 @@ AFRAME.registerComponent('getid',{
     var el = this.el;
     el.addEventListener('mousedown',function(){
       sphereEl=el;
+      this.setAttribute('color','black');
       console.log(el);
       nel=el;
     })
     el.addEventListener('click',function(){
         nel=null;
-
+        this.setAttribute('color','white');
     })
   }
 });
@@ -57,7 +58,8 @@ AFRAME.registerComponent('draggable-component', {
                     rc.setFromCamera(mouse, cameraObj);
                     let point = rc.ray.at(dist);
                     sphereEl.setAttribute('position', point);
-                    console.log(point);
+
+
                   }
                 }
             }
